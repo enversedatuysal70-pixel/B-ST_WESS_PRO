@@ -1269,6 +1269,20 @@ class WessVIPRadarApp:
 def main():
     import streamlit as st
     st.title("WESS VIP RADAR")
+#
+   
+
+    # BURADAN İTİBAREN EKLENECEK
+     app = WessVIPRadarApp(None)
+        if st.button("Taramayı Başlat"):
+ st.info("Veriler güncelleniyor ve analiz ediliyor...")
+        app.filtrele_ve_guncelle()
+        
+ if hasattr(app, 'genel_liste') and not app.genel_liste.empty:
+  st.success("Tarama başarıyla tamamlandı!")
+  st.dataframe(app.genel_liste, use_container_width=True)
+else:
+            st.warning("Gösterilecek veri bulunamadı.")
 #   # root = tk.Tk()
   #  
    # login_dialog = LoginDialog(root)
