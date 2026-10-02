@@ -44,9 +44,7 @@ class ToolTip:
         if tw:
             tw.destroy()
 
- ---------------------------------------------------------
-# 1. ŞİFRE VE GİRİŞ POP-UP EKRANI
-# ---------------------------------------------------------
+
 class LoginDialog(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
