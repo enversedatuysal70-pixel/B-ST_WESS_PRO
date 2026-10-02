@@ -1267,12 +1267,12 @@ class WessVIPRadarApp:
 # 5. UYGULAMA BAŞLATICI
 # ---------------------------------------------------------
 def main():
-    root = tk.Tk()
+   # root = tk.Tk()
     
-    login_dialog = LoginDialog(root)
+   # login_dialog = LoginDialog(root)
     root.wait_window(login_dialog)
 
-    if login_dialog.is_authenticated:
+  #  if login_dialog.is_authenticated:
         app = WessVIPRadarApp(root)
         root.mainloop()
     else:
