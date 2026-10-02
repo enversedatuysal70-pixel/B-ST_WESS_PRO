@@ -110,9 +110,9 @@ class ToolTip:
 class WessVIPRadarApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("💎 WESS BİST DİNAMİK KALKIŞ & ENDEKS SİNYAL MOTORU PRO")
-        self.root.geometry("1650x940")
-        self.root.configure(bg="#121212")
+       # self.root.title("💎 WESS BİST DİNAMİK KALKIŞ & ENDEKS SİNYAL MOTORU PRO")
+       # self.root.geometry("1650x940")
+       # self.root.configure(bg="#121212")
 
         self.auto_refresh_job = None
         self.raw_results = []
