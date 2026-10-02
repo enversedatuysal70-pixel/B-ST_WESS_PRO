@@ -45,8 +45,8 @@ class ToolTip:
             tw.destroy()
 
 
-class LoginDialog(tk.Toplevel):
-    def __init__(self, parent):
+#class LoginDialog(tk.Toplevel):
+   # def __init__(self, parent):
         super().__init__(parent)
         self.title("🔐 WESS VIP SYSTEM - GİRİŞ")
         self.geometry("380x260")
