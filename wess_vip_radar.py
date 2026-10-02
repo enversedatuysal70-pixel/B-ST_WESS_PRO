@@ -107,32 +107,7 @@ class ToolTip:
 # ---------------------------------------------------------
 # 2. ANA RADAR UYGULAMASI
 # ---------------------------------------------------------
-class WessVIPRadarApp:
-#    def __init__(self, root):
-        self.root = root
-     #  # self.root.title("💎 WESS BİST DİNAMİK KALKIŞ & ENDEKS SİNYAL MOTORU PRO")
-      # # self.root.geometry("1650x940")
-      # # self.root.configure(bg="#121212")
 
-  #      self.auto_refresh_job = None
-    #    self.raw_results = []
-        self.raw_index_results = []
-    #    self.selected_tag_filter = None
-
-        # Başlık Paneli
-       # title_frame = tk.Frame(self.root, bg="#1e1e1e", pady=6)
-       # title_frame.pack(fill="x")
-      #  
-       # lbl_title = tk.Label(
-      #      title_frame, 
-      #      text="⚡ WESS BİST MULTI-TIMEFRAME ENDEKS DİNAMİK RADAR ENGINE", 
-      #      font=("Helvetica", 13, "bold"), 
-      #      fg="#00ffcc", 
-      #      bg="#1e1e1e"
-       # )
-       # lbl_title.pack(side="left", padx=15)
-            text="⚡ WESS BİST MULTI-TIMEFRAME ENDEKS DİNAMİK RADAR ENGINE", 
-            font=("Helvetica", 13, "bold"), 
             fg="#00ffcc", 
             bg="#1e1e1e"
         )
