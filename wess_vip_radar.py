@@ -1267,16 +1267,18 @@ class WessVIPRadarApp:
 # 5. UYGULAMA BAŞLATICI
 # ---------------------------------------------------------
 def main():
-   # root = tk.Tk()
-    
+    import streamlit as st
+    st.title("WESS VIP RADAR")
+#   # root = tk.Tk()
+  #  
    # login_dialog = LoginDialog(root)
-    root.wait_window(login_dialog)
-
+ #   root.wait_window(login_dialog)
+#
   #  if login_dialog.is_authenticated:
-        app = WessVIPRadarApp(root)
-        root.mainloop()
-    else:
-        root.destroy()
+#        app = WessVIPRadarApp(root)
+ #       root.mainloop()
+ #   else:
+ #       root.destroy()
 
 if __name__ == "__main__":
     main()
