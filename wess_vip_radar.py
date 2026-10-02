@@ -1,15 +1,14 @@
 import threading
 import webbrowser
-import tkinter as tk
-from tkinter import ttk, messagebox
+
+
 import pandas as pd
 import numpy as np
 
 try:
     from tradingview_screener import Query
 except ImportError:
-    messagebox.showerror("Eksik Kütüphane", "Lütfen terminalde 'pip install tradingview-screener' çalıştırın.")
-
+  pass
 # ---------------------------------------------------------
 # HOVER (TOOLTIP) AÇIKLAMA BALONCUĞU SINIFI
 # ---------------------------------------------------------
@@ -45,7 +44,7 @@ class ToolTip:
         if tw:
             tw.destroy()
 
-# ---------------------------------------------------------
+ ---------------------------------------------------------
 # 1. ŞİFRE VE GİRİŞ POP-UP EKRANI
 # ---------------------------------------------------------
 class LoginDialog(tk.Toplevel):
@@ -106,7 +105,7 @@ class LoginDialog(tk.Toplevel):
     def on_close(self):
         self.is_authenticated = False
         self.destroy()
-
+#
 # ---------------------------------------------------------
 # 2. ANA RADAR UYGULAMASI
 # ---------------------------------------------------------
