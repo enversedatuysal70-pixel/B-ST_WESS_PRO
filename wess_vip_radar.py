@@ -107,154 +107,21 @@ class ToolTip:
 # ---------------------------------------------------------
 # 2. ANA RADAR UYGULAMASI
 # ---------------------------------------------------------
+def main():
+    import streamlit as st
+    st.title("WESS VIP RADAR")
 
-            fg="#00ffcc", 
-            bg="#1e1e1e"
-        )
-        lbl_title.pack(side="left", padx=15)
-
-        btn_help = tk.Button(
-            title_frame, text="ℹ️ ŞEMATİK SİSTEM REHBERİ", font=("Helvetica", 9, "bold"),
-            bg="#00b4d8", fg="white", padx=10, pady=2, command=self.rehber_penceresi_ac
-        )
-        btn_help.pack(side="right", padx=15)
-        ToolTip(btn_help, "Adım adım yol gösteren, tüm doneleri açıklayan detaylı şematik rehberi açar.")
-
-        # Kontrol Paneli
-        control_frame = tk.Frame(self.root, bg="#121212", pady=6)
-        control_frame.pack(fill="x", padx=15)
-
-        tk.Label(control_frame, text="Periyot:", font=("Helvetica", 9, "bold"), fg="white", bg="#121212").pack(side="left", padx=(0, 3))
-
-        self.timeframe_var = tk.StringVar(value="15 Dakika (15m)")
-        self.combo_timeframe = ttk.Combobox(
-            control_frame, 
-            textvariable=self.timeframe_var, 
-            state="readonly",
-            width=15,
-            font=("Helvetica", 9, "bold")
-        )
-        self.combo_timeframe['values'] = (
-            "5 Dakika (5m)", "10 Dakika (10m)", "15 Dakika (15m)", "30 Dakika (30m)",
-            "1 Saatlik (60m)", "2 Saatlik (120m)", "3 Saatlik (180m)", 
-            "4 Saatlik (240m)", "Günlük (1D)", "Haftalık (1W)", "Aylık (1M)"
-        )
-        self.combo_timeframe.pack(side="left", padx=(0, 10))
-
-        tk.Label(control_frame, text="Sektör:", font=("Helvetica", 9, "bold"), fg="#00ffcc", bg="#121212").pack(side="left", padx=(5, 3))
+    app = WessVIPRadarApp(None)
+    
+    if st.button("Taramayı Başlat"):
+        st.info("Veriler güncelleniyor ve analiz ediliyor...")
+        app.filtrele_ve_guncelle()
         
-        self.index_filter_var = tk.StringVar(value="TÜM BIST")
-        self.combo_index = ttk.Combobox(
-            control_frame,
-            textvariable=self.index_filter_var,
-            state="readonly",
-            width=18,
-            font=("Helvetica", 9, "bold")
-        )
-        self.combo_index['values'] = (
-            "TÜM BIST", "SANAYİ (XUSIN)", "BANKACILIK (XBANK)", "GYO (XGMYO)", 
-            "HOLDİNG (XHOLD)", "BİLİŞİM (XBLSM)", "İLETİŞİM (XILTM)", "GIDA (XGIDA)", 
-            "KİMYA (XKMYA)", "ULAŞTIRMA (XULAS)"
-        )
-        self.combo_index.pack(side="left", padx=(0, 10))
-        self.combo_index.bind("<<ComboboxSelected>>", lambda e: self.filtrele_ve_guncelle())
-
-        self.btn_tara = tk.Button(
-            control_frame, 
-            text="🚀 MANUEL TARA", 
-            font=("Helvetica", 9, "bold"), 
-            bg="#007acc", 
-            fg="white", 
-            padx=10, pady=2, 
-            command=self.tarama_baslat_thread
-        )
-        self.btn_tara.pack(side="left", padx=(0, 10))
-
-        self.auto_refresh_var = tk.BooleanVar(value=False)
-        self.chk_auto = tk.Checkbutton(
-            control_frame, 
-            text="🔄 Oto Yenile", 
-            variable=self.auto_refresh_var, 
-            onvalue=True, 
-            offvalue=False,
-            font=("Helvetica", 9, "bold"), 
-            fg="#00D2FF", 
-            bg="#121212", 
-            selectcolor="#1e1e1e",
-            activebackground="#121212",
-            activeforeground="#00D2FF",
-            command=self.toggle_auto_refresh
-        )
-        self.chk_auto.pack(side="left", padx=(0, 3))
-
-        self.interval_var = tk.StringVar(value="10 Saniye")
-        self.combo_interval = ttk.Combobox(
-            control_frame, 
-            textvariable=self.interval_var, 
-            state="readonly",
-            width=9,
-            font=("Helvetica", 9)
-        )
-        self.combo_interval['values'] = ("10 Saniye", "30 Saniye", "1 Dakika", "5 Dakika")
-        self.combo_interval.pack(side="left", padx=(0, 10))
-
-        self.lbl_search_mode = tk.Label(
-            control_frame,
-            text="⚙️ [ARAMA MODU: YÜKLENİYOR...]",
-            font=("Helvetica", 9, "bold"),
-            fg="#FFD700",
-            bg="#121212"
-        )
-        self.lbl_search_mode.pack(side="left", padx=10)
-
-        self.lbl_status = tk.Label(
-            control_frame, 
-            text="Sistem Hazır...", 
-            font=("Helvetica", 8, "italic"), 
-            fg="#aaaaaa", 
-            bg="#121212"
-        )
-        self.lbl_status.pack(side="left", padx=2)
-
-        # TABLO STİLİ
-        style = ttk.Style()
-        style.theme_use("clam")
-        style.configure("Treeview", background="#1e1e1e", foreground="#FFD700", fieldbackground="#1e1e1e", rowheight=23, font=("Helvetica", 9, "bold"))
-        style.configure("Treeview.Heading", background="#2d2d2d", foreground="#00ffcc", font=("Helvetica", 9, "bold"))
-        style.map("Treeview", background=[('selected', '#007acc')], foreground=[('selected', '#ffffff')])
-
-        # Endeks Paneli
-        index_container = tk.LabelFrame(
-            self.root, 
-            text="🏛️ BIST ANA VE ALT ENDEKS CANLI SİNYAL PANELI (ENDEKSE TIKLAYARAK HİSSELERİ VE SAYAÇLARI SÜZÜN)", 
-            font=("Helvetica", 9, "bold"), 
-            fg="#00E5FF", 
-            bg="#101c28", 
-            bd=2, 
-            relief="groove", 
-            padx=5, pady=5
-        )
-        index_container.pack(fill="x", padx=15, pady=(0, 5))
-
-        idx_columns = ("Endeks Kodu", "Endeks Adı", "Son Puan", "Değişim (%)", "RSI (14)", "Sıkışma", "ENDEKS AKSİYON SİNYALİ")
-        self.tree_index = ttk.Treeview(index_container, columns=idx_columns, show="headings", height=4)
-
-        for col_name in idx_columns:
-            self.tree_index.heading(col_name, text=col_name)
-            width = 240 if col_name == "ENDEKS AKSİYON SİNYALİ" else 110
-            self.tree_index.column(col_name, anchor="center", width=width)
-
-        scroll_idx = ttk.Scrollbar(index_container, orient="vertical", command=self.tree_index.yview)
-        self.tree_index.configure(yscroll=scroll_idx.set)
-        
-        self.tree_index.pack(side="left", fill="x", expand=True)
-        scroll_idx.pack(side="right", fill="y")
-        self.tree_index.bind("<ButtonRelease-1>", self.endeks_tiklandi)
-
-        # Sayaç Kartları
-        summary_frame = tk.Frame(self.root, bg="#121212", pady=4)
-        summary_frame.pack(fill="x", padx=15)
-
+        if hasattr(app, 'genel_liste') and not app.genel_liste.empty:
+            st.success("Tarama başarıyla tamamlandı!")
+            st.dataframe(app.genel_liste, use_container_width=True)
+        else:
+            st.warning("Gösterilecek veri bulunamadı.")
         def create_card(parent, title, bg_color, tag_code, help_text, fg_color="#ffffff"):
             card = tk.Frame(parent, bg=bg_color, padx=5, pady=2, bd=1, relief="ridge", cursor="hand2")
             card.pack(side="left", expand=True, fill="x", padx=2)
